@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+myhamlog-gdusbabek = {editable = true, path = "."}
+myhamlog-aprs-gdusbabek = {editable = true, path = "."}
+n3fjp-gdusbabek = {editable = true, path = "."}
+
+[packages]
+myhamlog-gdusbabek = { path = ".", editable = true}
+
+[requires]
+python_version = "3.8.9"

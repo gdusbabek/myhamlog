@@ -1,0 +1,17 @@
+from myhamlog import script_args
+from myhamlog import line_parser
+from myhamlog import n3jfp
+
+if __name__ == '__main__':
+    args = script_args.parse_clargs()
+    line = line_parser.make_line(args.logline, args.pota)
+    print(f"Line looks good.")
+    if args.verbose:
+        print(f"pota={args.pota}\n{line}")
+    n3fjp_message = n3jfp.make_n3fjp_pota_message(line) if args.pota else n3jfp.make_n3fjp_message(line)
+    if args.dry:
+        print(n3fjp_message)
+    else:
+        n3jfp.write_n3fjp(n3fjp_message, args.host, args.port)
+        print('Log was successful.')
+    
