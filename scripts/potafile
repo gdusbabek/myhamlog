@@ -1,0 +1,16 @@
+from myhamlog import script_args
+from myhamlog import file_parser
+from myhamlog import n3jfp
+
+if __name__ == '__main__':
+    args = script_args.parse_clargs()
+    args.pota = True # force pota mode.
+    print(f"Logging to {args.host}:{args.port}")
+    for line in file_parser.process_log(args.file):
+        n3fjp_message = n3jfp.make_n3fjp_pota_message(line) if args.pota else n3jfp.make_n3fjp_message(line)
+        if args.dry:
+            print(n3fjp_message)
+        else:
+            n3jfp.write_n3fjp(n3fjp_message, args.host, args.port)
+            print(f"Good->{line}")
+    

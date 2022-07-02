@@ -19,5 +19,5 @@ setuptools.setup(
         "Operating System :: OS Independent"
     ],
     python_requires=">=3.7",
-    scripts=["scripts/n3fjp"],
+    scripts=["scripts/n3fjp", "scripts/potafile"],
 )
