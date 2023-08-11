@@ -13,4 +13,4 @@ n3fjp-gdusbabek = {editable = true, path = "."}
 myhamlog-gdusbabek = { path = ".", editable = true}
 
 [requires]
-python_version = "3.8.9"
+python_version = "3.8.13"

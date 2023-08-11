@@ -1,3 +1,4 @@
+import sys
 from . import freq
 from . import line_parser
 
@@ -72,27 +73,29 @@ def process_log(input_path):
             else:
                 # processing line entry.
                 # print(f'date:{dates}, freq:{freq}, park:{my_park}, state:{state}, county:{county}, grid:{grid}  {line}')
-
-                parts = line.split(',')
-                times = parts[0][0:2] + ':' + parts[0][2:]
-                call = parts[1]
-                their_rst = parts[2]
-                my_rst = parts[3]
-                if len(parts) > 4:
-                    comment = ''.join(parts[4:])
-                else:
-                    comment = ''
-                if comment.lower().startswith('k-') or \
-                comment.lower().startswith('ve-') or \
-                comment.lower().startswith('hi-'):
-                    their_park = comment
-                    comment = ''
-                else:
-                    their_park = ''
-                
-                # day,time,freq,call,recv,sent,mode,their_park,my_park,comment
-                yield line_parser.ParkLine(dates, times, freqs, call, their_rst, my_rst, mode, their_park, my_park, comment)
-                # yield f"{dates},{times},{freqs},{call},{their_rst},{my_rst},{mode},{their_park},{my_park},{comment}"
-            
+                try:
+                    parts = line.split(',')
+                    times = parts[0][0:2] + ':' + parts[0][2:]
+                    call = parts[1]
+                    their_rst = parts[2]
+                    my_rst = parts[3]
+                    if len(parts) > 4:
+                        comment = ''.join(parts[4:])
+                    else:
+                        comment = ''
+                    if comment.lower().startswith('k-') or \
+                    comment.lower().startswith('ve-') or \
+                    comment.lower().startswith('hi-'):
+                        their_park = comment
+                        comment = ''
+                    else:
+                        their_park = ''
+                    
+                    # day,time,freq,call,recv,sent,mode,their_park,my_park,comment
+                    yield line_parser.ParkLine(dates, times, freqs, call, their_rst, my_rst, mode, their_park, my_park, comment)
+                    # yield f"{dates},{times},{freqs},{call},{their_rst},{my_rst},{mode},{their_park},{my_park},{comment}"
+                except IndexError:
+                    print(f"Bad Line: {line}")
+                    sys.exit(0)
             # read the next line.
             line = reader.readline()
